@@ -1,9 +1,9 @@
 const express = require('express');
+const mailController = require('./controllers/mailController');
 
 const routes = express.Router();
 
-routes.get('/', (req,res) => {
-    res.send('Hello world ta atualizando e tá no arquivo de rotas');
-});
+routes.get('/', mailController.test);
+routes.get('/sendMail', mailController.sendMail);
 
 module.exports = routes;

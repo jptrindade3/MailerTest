@@ -13,17 +13,17 @@ module.exports = {
             port: "465",
             secure: "true",
             auth: {
-                user: `${process.env.GMAIL_LOGIN}`,
-                pass: `${process.env.GMAIL_PASS}`
+                user: process.env.GMAIL_LOGIN,
+                pass: process.env.GMAIL_PASS
             }
         });
 
         transporter.sendMail({
             from:`João Trindade <${process.env.GMAIL_LOGIN}>`,
-            to: `${process.env.GMAIL_LOGIN_TO_SEND}`,
+            to: process.env.GMAIL_LOGIN_TO_SEND,
             subject:"teste de envio",
             text: "Colé zé, tomara que tenha funcionado o código",
-            html:"Colé zé, tomara que tenha funcionado o código <br> <a href='https://github.com/jptrindade3'> Meu GitHub </a> <br> <img src='https://source.unsplash.com/bZZp1PmHI0E/1600x900'>"
+            html:"Colé zé, tomara que tenha funcionado o código <br> <a href='https://github.com/jptrindade3'> Meu GitHub </a> <br> <img src='https://source.unsplash.com/bZZp1PmHI0E/1600x900' style='max-height:600px;max-width:900px'>"
         }).then( message => {
             console.log(message);
         }).catch(err => {
@@ -31,5 +31,32 @@ module.exports = {
         });
 
         res.send('foi');
+    },
+
+    async sendMailList(req,res){
+        let transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: "465",
+            secure: "true",
+            auth: {
+                user: process.env.GMAIL_LOGIN,
+                pass: process.env.GMAIL_PASS
+            }
+        });
+
+        let eMailList = [            
+        ];
+        
+        await transporter.sendMail({
+            from:`João Trindade <${process.env.GMAIL_LOGIN}>`,
+            to: eMailList,
+            subject:"teste de envio",
+            html:""
+        }).then( message => {
+            console.log(message);
+        }).catch(err => {
+            console.log(err);
+        });
+        res.send('foi a lista');
     }
 };
